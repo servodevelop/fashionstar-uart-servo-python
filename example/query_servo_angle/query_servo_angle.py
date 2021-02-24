@@ -3,7 +3,7 @@ FashionStar Uart舵机
 > Python SDK舵机角度查询 Example <
 --------------------------------------------------
 - 作者: 阿凯
-- Email: xingshunkai@qq.com
+- Email: kyle.xing@fashionstar.com.hk
 - 更新时间: 2020-12-5
 --------------------------------------------------
 '''
