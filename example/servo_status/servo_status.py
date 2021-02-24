@@ -35,7 +35,7 @@ def log_servo_status():
     # 读取电流
     current = uservo.query_current(SERVO_ID)
     # 读取功率
-    power = uservo.query_current(SERVO_ID)
+    power = uservo.query_power(SERVO_ID)
     # 读取温度
     temp = uservo.query_temperature(SERVO_ID)
 
