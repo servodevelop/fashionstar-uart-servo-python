@@ -1,7 +1,7 @@
 '''
 Fashion Star 串口舵机Python SDK
 --------------------------------------------------
-- 作者: 阿凯
+- 作者: 阿凯爱玩机器人
 - Email: kyle.xing@fashionstar.com.hk
 - 更新时间: 2020-12-5
 --------------------------------------------------
@@ -182,6 +182,9 @@ class UartServoInfo:
 	
 	def is_stop(self):
 		'''判断舵机是否已经停止'''
+		# 如果没有指定目标角度， 就将其设置为当前角度
+  		if self.target_angle is None:
+			self.target_angle = self.cur_angle
 		# 角度误差判断
 		angle_error = self.target_angle - self.cur_angle
 		if abs(angle_error) <= self.SERVO_DEADBLOCK:
@@ -306,7 +309,9 @@ class UartServoManager:
 		ret = servo_id in self.servos
 		if self.is_debug and ret:
 			logging.info('[fs_uservo]串口舵机ID={} 响应ping'.format(servo_id))
-
+		if ret:
+      		# 更新舵机角度
+			self.query_servo_angle(servo_id)
 		return ret
 
 	def scan_servo(self, srv_num=254):
