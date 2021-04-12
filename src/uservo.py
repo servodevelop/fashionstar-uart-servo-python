@@ -221,7 +221,7 @@ class UartServoInfo:
 			angle = self.lowerb if angle < self.lowerb else angle
 		if self.upperb is not None:
   			angle = self.upperb if angle > self.upperb else angle
-
+		# 设置目标角度
 		self.target_angle = angle
 
 	def update(self, angle):
