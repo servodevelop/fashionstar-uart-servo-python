@@ -18,9 +18,10 @@ from uservo import UartServoManager
 
 # 参数配置
 # 角度定义
-SERVO_PORT_NAME =  'COM6' # 舵机串口号
-SERVO_BAUDRATE = 115200 # 舵机的波特率
-SERVO_ID = 0  # 舵机的ID号
+SERVO_PORT_NAME =  'COM6'		# 舵机串口号
+SERVO_BAUDRATE = 115200			# 舵机的波特率
+SERVO_ID = 0					# 舵机的ID号
+SERVO_HAS_MTURN_FUNC = False	# 舵机是否拥有多圈模式
 
 # 初始化串口
 uart = serial.Serial(port=SERVO_PORT_NAME, baudrate=SERVO_BAUDRATE,\
@@ -50,18 +51,18 @@ uservo.set_servo_angle(SERVO_ID, -90.0, power=400) # 设置舵机角度(指定�
 uservo.wait() # 等待舵机静止
 
 #########################################################################################
+if SERVO_HAS_MTURN_FUNC:
+	print("[多圈模式]设置舵机角度为900.0°, 周期1000ms")
+	uservo.set_servo_angle(SERVO_ID, 900.0, interval=1000, is_mturn=True) # 设置舵机角度(指定周期 单位ms)
+	uservo.wait() # 等待舵机静止
+	print("-> {}".format(uservo.query_servo_angle(SERVO_ID)))
 
-print("[多圈模式]设置舵机角度为900.0°, 周期1000ms")
-uservo.set_servo_angle(SERVO_ID, 900.0, interval=1000, is_mturn=True) # 设置舵机角度(指定周期 单位ms)
-uservo.wait() # 等待舵机静止
-print("-> {}".format(uservo.query_servo_angle(SERVO_ID)))
+	print("[多圈模式]设置舵机角度为-900.0°, 设置转速为200 °/s")
+	uservo.set_servo_angle(SERVO_ID, -900.0, velocity=200.0, t_acc=100, t_dec=100, is_mturn=True) # 设置舵机角度(指定转速 单位°/s) dps: degree per second
+	uservo.wait() # 等待舵机静止
+	print("-> {}".format(uservo.query_servo_angle(SERVO_ID)))
 
-print("[多圈模式]设置舵机角度为-900.0°, 设置转速为200 °/s")
-uservo.set_servo_angle(SERVO_ID, -900.0, velocity=200.0, t_acc=100, t_dec=100, is_mturn=True) # 设置舵机角度(指定转速 单位°/s) dps: degree per second
-uservo.wait() # 等待舵机静止
-print("-> {}".format(uservo.query_servo_angle(SERVO_ID)))
-
-print("[多圈模式]设置舵机角度为-850.0°, 添加功率限制")
-uservo.set_servo_angle(SERVO_ID, -850.0, power=400, is_mturn=True) # 设置舵机角度(指定功率 单位mW)
-uservo.wait() # 等待舵机静止
-print("-> {}".format(uservo.query_servo_angle(SERVO_ID)))
+	print("[多圈模式]设置舵机角度为-850.0°, 添加功率限制")
+	uservo.set_servo_angle(SERVO_ID, -850.0, power=400, is_mturn=True) # 设置舵机角度(指定功率 单位mW)
+	uservo.wait() # 等待舵机静止
+	print("-> {}".format(uservo.query_servo_angle(SERVO_ID)))
